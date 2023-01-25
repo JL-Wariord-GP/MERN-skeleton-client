@@ -192,7 +192,14 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
                         </Box>
                         <Box position="absolute" bottom="2rem" >
                             <Divider />
-                            <FlexBetWeen textTransform="none" gap="1rem" m="1.5rem 2rem 0 3rem">
+                            <FlexBetWeen 
+                            textTransform="none" 
+                            gap="1rem" 
+                            m="1.5rem 2rem 0 3rem"
+                            position="absolute"
+                            padding="30px 0"
+                            top="2rem"
+                            >
                                 <Box
                                     component="img"
                                     alt="profile"
