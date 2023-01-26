@@ -9,12 +9,12 @@ body,
     font-family: "Inter", sans-serif;
 }
 
-body::-webkit-scrollbar {
+#root::-webkit-scrollbar {
 	width: 10px;
 	background: #191f45;
 }
 
-body::-webkit-scrollbar-thumb {
+#root::-webkit-scrollbar-thumb {
 	background: rgba(255,255,255, .2);
 	border-radius: 10px;
 	border-right: 2px solid #191F45;

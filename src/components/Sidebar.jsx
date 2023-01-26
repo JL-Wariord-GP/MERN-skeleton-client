@@ -13,7 +13,6 @@ import {
     useTheme
 } from "@mui/material";
 import {
-    SettingsOutlined,
     ChevronLeft,
     ChevronRightOutlined,
     HomeOutlined,
@@ -31,8 +30,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import FlexBetWeen from './FlexBetween';
-import profileImage from "assets/img-jorge.png"
-
+import ScrollBar from './ScrollBar'
 const navItems = [
     {
         text: "Dashboard",
@@ -107,132 +105,110 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
 
 
     return (
-        <Box component="nav">
-            {
-                isSidebarOpen && (
-                    <Drawer
-                        open={isSidebarOpen}
-                        onClose={() => setIsSidebarOpen(false)}
-                        variant="persistent"
-                        anchor='left'
-                        sx={{
-                            width: drawerWidth,
-                            "& .MuiDrawer-paper": {
-                                color: theme.palette.secondary[200],
-                                backgroundColor: theme.palette.background.alt,
-                                boxSixing: "border-box",
-                                borderWidth: isNonMobile ? 0 : "2px",
-                                width: drawerWidth
-                            }
-                        }}
-                    >
-                        <Box width="100%">
-                            <Box m="1.5rem 2rem 2rem 3rem">
-                                <FlexBetWeen color={theme.palette.secondary.main}>
-                                    <Box display="flex" alignItems="center" gap="0.5rem">
-                                        <Typography variant="h4" fontWeight="bold">
-                                            SYSTEM-MANAGER
-                                        </Typography>
-                                    </Box>
+        <ScrollBar>
+            <Box component="nav"
+            >
+
+                {
+                    isSidebarOpen && (
+                        <Drawer
+                            open={isSidebarOpen}
+                            onClose={() => setIsSidebarOpen(false)}
+                            variant="persistent"
+                            anchor='left'
+                            sx={{
+                                width: drawerWidth,
+                                "& .MuiDrawer-paper": {
+                                    color: theme.palette.secondary[200],
+                                    backgroundColor: theme.palette.background.alt,
+                                    boxSixing: "border-box",
+                                    borderWidth: isNonMobile ? 0 : "2px",
+                                    width: drawerWidth
+                                },
+                            }}
+                        >
+                            <Box width="100%">
+                                <Box m="1.5rem 2rem 2rem 3rem">
+                                    <FlexBetWeen color={theme.palette.secondary.main}>
+                                        <Box display="flex" alignItems="center" gap="0.5rem">
+                                            <Typography variant="h4" fontWeight="bold">
+                                                SYSTEM-MANAGER
+                                            </Typography>
+                                        </Box>
+                                        {
+                                            !isNonMobile && (
+                                                <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+                                                    <ChevronLeft />
+                                                </IconButton>
+                                            )}
+                                    </FlexBetWeen>
+                                </Box>
+                                <List>
                                     {
-                                        !isNonMobile && (
-                                            <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-                                                <ChevronLeft />
-                                            </IconButton>
-                                        )}
-                                </FlexBetWeen>
-                            </Box>
-                            <List>
-                                {
-                                    navItems.map(({ text, icon }) => {
-                                        if (!icon) {
+                                        navItems.map(({ text, icon }) => {
+                                            if (!icon) {
+                                                return (
+                                                    <Typography key={text} sx={{ m: "2.25rem 0 1rem 3rem" }}>
+                                                        {text}
+                                                    </Typography>
+                                                )
+                                            }
+                                            const lcText = text.toLowerCase();
                                             return (
-                                                <Typography key={text} sx={{ m: "2.25rem 0 1rem 3rem" }}>
-                                                    {text}
-                                                </Typography>
-                                            )
-                                        }
-                                        const lcText = text.toLowerCase();
-                                        return (
-                                            <ListItem key={text} disablePadding>
-                                                <ListItemButton
-                                                    onClick={() => {
-                                                        navigate(`/${lcText}`);
-                                                        setActive(lcText)
-                                                    }}
-                                                    sx={{
-                                                        backgroundColor: active === lcText ? theme.palette.secondary[300] : "transparent",
-                                                        color: active === lcText
-                                                            ? theme.palette.primary[600]
-                                                            : theme.palette.secondary[100]
-                                                    }}
-                                                >
-                                                    <ListItemIcon
+                                                <ListItem key={text} disablePadding>
+                                                    <ListItemButton
+                                                        onClick={() => {
+                                                            navigate(`/${lcText}`);
+                                                            setActive(lcText)
+                                                        }}
                                                         sx={{
-                                                            ml: "2rem",
+                                                            backgroundColor: active === lcText ? theme.palette.secondary[300] : "transparent",
                                                             color: active === lcText
                                                                 ? theme.palette.primary[600]
-                                                                : theme.palette.secondary[200]
+                                                                : theme.palette.secondary[100]
                                                         }}
                                                     >
-                                                        {icon}
-                                                    </ListItemIcon>
-                                                    <ListItemText primary={text} />
-                                                    {
-                                                        active === lcText && (
-                                                            <ChevronRightOutlined sx={{ ml: "auto" }} />
-                                                        )
-                                                    }
-                                                </ListItemButton>
-                                            </ListItem>
-                                        )
-                                    })
-                                }
-                            </List>
-                        </Box>
-                        <Box position="absolute" bottom="2rem" >
-                            <Divider />
-                            <FlexBetWeen 
-                            textTransform="none" 
-                            gap="1rem" 
-                            m="1.5rem 2rem 0 3rem"
-                            position="absolute"
-                            padding="30px 0"
-                            top="2rem"
-                            >
-                                <Box
-                                    component="img"
-                                    alt="profile"
-                                    src={profileImage}
-                                    height="40px"
-                                    width="40px"
-                                    borderRadius="50%"
-                                    sx={{ objectFit: "cover" }}
-                                />
-                                    <Box textAlign="left">
-                                        <Typography
-                                            fontWeight="bold"
-                                            fontSize="0.9rem"
-                                            sx={{ color: theme.palette.secondary[100] }}
-                                        >
-                                            {user.name}
-                                        </Typography>
+                                                        <ListItemIcon
+                                                            sx={{
+                                                                ml: "2rem",
+                                                                color: active === lcText
+                                                                    ? theme.palette.primary[600]
+                                                                    : theme.palette.secondary[200]
+                                                            }}
+                                                        >
+                                                            {icon}
+                                                        </ListItemIcon>
+                                                        <ListItemText primary={text} />
+                                                        {
+                                                            active === lcText && (
+                                                                <ChevronRightOutlined sx={{ ml: "auto" }} />
+                                                            )
+                                                        }
+                                                    </ListItemButton>
+                                                </ListItem>
+                                            )
+                                        })
+                                    }
+                                </List>
+                            </Box>
+                            <Box position="absolute" bottom="2rem" >
+                                <Divider />
+                                <FlexBetWeen
+                                    textTransform="none"
+                                    gap="1rem"
+                                    m="1.5rem 2rem 0 3rem"
+                                    position="absolute"
+                                    padding="30px 0"
+                                    top="2rem"
+                                >
+                                </FlexBetWeen>
+                            </Box>
+                        </Drawer>
+                    )
+                }
+            </Box>
+        </ScrollBar>
 
-                                        <Typography
-                                            fontSize="0.8rem"
-                                            sx={{ color: theme.palette.secondary[100] }}
-                                        >
-                                            {user.occupation}
-                                        </Typography>
-                                    </Box>
-                                    <SettingsOutlined
-                                        sx={{ color: theme.palette.secondary[300], fontSize: "25px" }} />
-                            </FlexBetWeen>
-                        </Box>
-                    </Drawer>
-                )
-            }
-        </Box>
     )
 }
 
